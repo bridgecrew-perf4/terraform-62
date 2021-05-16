@@ -8,6 +8,14 @@
     aws --version
 }
 
+## export profile
+{
+    echo 'export AWS_ACCESS_KEY_ID=<PASTE HERE>' >> ~/.bashrc
+    echo 'export AWS_SECRET_ACCESS_KEY=<PASTE HERE>'  >> ~/.bashrc
+    echo 'export AWS_DEFAULT_REGION=us-west-2' >> ~/.bashrc
+    source ~/.bashrc
+}
+
 ## Install aws ekstl
 {
     curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
