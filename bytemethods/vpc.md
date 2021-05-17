@@ -138,3 +138,35 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 (Sun May-5 4:48:25pm)-(CPU 19.1%:0:Net 29)-(hugomatus:~/sandbox/terraform/bytemethods)-(32K:6)
 
 ```
+
+## Show
+
+```text
+> terraform show
+# aws_vpc.research-vpc:
+resource "aws_vpc" "research-vpc" {
+    arn                              = "arn:aws:ec2:us-west-2:581092633589:vpc/vpc-0ce5506ab660f0cab"
+    assign_generated_ipv6_cidr_block = false
+    cidr_block                       = "10.0.0.0/16"
+    default_network_acl_id           = "acl-0e39b7fb1b393a90f"
+    default_route_table_id           = "rtb-0c71df2372e81b507"
+    default_security_group_id        = "sg-030b652dbecfcdedf"
+    dhcp_options_id                  = "dopt-0b6419aaeaa4f9f20"
+    enable_classiclink               = false
+    enable_classiclink_dns_support   = false
+    enable_dns_hostnames             = true
+    enable_dns_support               = true
+    id                               = "vpc-0ce5506ab660f0cab"
+    instance_tenancy                 = "default"
+    main_route_table_id              = "rtb-0c71df2372e81b507"
+    owner_id                         = "581092633589"
+    tags                             = {
+        "Environment" = "research"
+        "Name"        = "theory-k8s-research"
+    }
+    tags_all                         = {
+        "Environment" = "research"
+        "Name"        = "theory-k8s-research"
+    }
+}
+```
