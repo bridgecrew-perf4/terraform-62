@@ -1,5 +1,7 @@
-$ terraform show
+# terraform show
 # aws_default_route_table.route_table:
+
+```json
 resource "aws_default_route_table" "route_table" {
     arn                    = "arn:aws:ec2:us-west-2:581092633589:route-table/rtb-061390f159ede7f74"
     default_route_table_id = "rtb-061390f159ede7f74"
@@ -30,6 +32,7 @@ resource "aws_default_route_table" "route_table" {
     }
     vpc_id                 = "vpc-0efa23c55e0a044c4"
 }
+```
 
 # aws_eip.research_nat_eip:
 resource "aws_eip" "research_nat_eip" {
