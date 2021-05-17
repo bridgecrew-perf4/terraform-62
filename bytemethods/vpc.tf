@@ -10,13 +10,13 @@ resource "aws_vpc" "research-vpc" {
   }
 }
 
-resource "aws_subnet" "research-public-subneta" {
+resource "aws_subnet" "research_subnet_public_a" {
     vpc_id = aws_vpc.research-vpc.id
     cidr_block = "10.0.20.0/22"
     map_public_ip_on_launch = "true"
     availability_zone = var.AWS_REGION
     tags = {
-        Name = "research-subnet-A"
+        Name = "research-subnet-public-1"
         Environment = var.ENVIRONMENT
     }
 }
