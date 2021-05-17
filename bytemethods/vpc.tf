@@ -6,6 +6,17 @@ resource "aws_vpc" "research-vpc" {
   instance_tenancy     = "default"
   tags = {
     Name        = "theory-k8s-research"
-    Environment = "research"
+    Environment = var.ENVIRONMENT
   }
+}
+
+resource "aws_subnet" "research-subnet-public-1" {
+    vpc_id = "${aws_vpc.prod-vpc.id}"
+    cidr_block = "10.0.20.0/22"
+    map_public_ip_on_launch = "true"
+    availability_zone = var.AWS_REGION
+    tags = {
+        Name = "research-subnet-A"
+        Environment = var.ENVIRONMENT
+    }
 }
