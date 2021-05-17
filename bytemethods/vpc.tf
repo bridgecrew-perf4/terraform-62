@@ -10,8 +10,8 @@ resource "aws_vpc" "research-vpc" {
   }
 }
 
-resource "aws_subnet" "research-subnet-public-1" {
-    vpc_id = "${aws_vpc.prod-vpc.id}"
+resource "aws_subnet" "research-subnet-public-a" {
+    vpc_id = "${aws_vpc.research-vpc}"
     cidr_block = "10.0.20.0/22"
     map_public_ip_on_launch = "true"
     availability_zone = var.AWS_REGION
