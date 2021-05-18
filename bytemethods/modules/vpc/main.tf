@@ -7,7 +7,7 @@ resource "aws_vpc" "rt_vpc" {
   enable_classiclink   = "false"
   instance_tenancy     = "default"
   tags = {
-    Name        = "theory-k8s-{var.ENVIRONMENT}"
+    Name        = "theory-k8s-${var.ENVIRONMENT}"
     Environment = var.ENVIRONMENT
   }
 }
@@ -20,7 +20,7 @@ resource "aws_subnet" "rt_subnet_public_A" {
   map_public_ip_on_launch = "true"
   availability_zone       = var.AWS_ZONE_A
   tags = {
-    Name        = "{var.ENVIRONMENT}-subnet-public-A"
+    Name        = "${var.ENVIRONMENT}-subnet-public-A"
     Environment = var.ENVIRONMENT
   }
 }
@@ -33,13 +33,13 @@ resource "aws_subnet" "rt_subnet_public_B" {
   map_public_ip_on_launch = "true"
   availability_zone       = var.AWS_ZONE_B
   tags = {
-    Name        = "{var.ENVIRONMENT}-subnet-public-B"
+    Name        = "${var.ENVIRONMENT}-subnet-public-B"
     Environment = var.ENVIRONMENT
   }
 }
 
 
-## K8 Subnet A 
+## K8 Subnet A
 
 resource "aws_subnet" "rt_subnet_k8s_A" {
   vpc_id                  = aws_vpc.rt_vpc.id
@@ -47,7 +47,7 @@ resource "aws_subnet" "rt_subnet_k8s_A" {
   map_public_ip_on_launch = "false"
   availability_zone       = var.AWS_ZONE_A
   tags = {
-    Name        = "{var.ENVIRONMENT}-subnet-k8s-A"
+    Name        = "${var.ENVIRONMENT}-subnet-k8s-A"
     Environment = var.ENVIRONMENT
   }
 }
@@ -60,7 +60,7 @@ resource "aws_subnet" "rt_subnet_k8s_B" {
   map_public_ip_on_launch = "false"
   availability_zone       = var.AWS_ZONE_B
   tags = {
-    Name        = "{var.ENVIRONMENT}-subnet-k8s-B"
+    Name        = "${var.ENVIRONMENT}-subnet-k8s-B"
     Environment = var.ENVIRONMENT
   }
 }
@@ -74,7 +74,7 @@ resource "aws_subnet" "rt_subnet_db_A" {
   map_public_ip_on_launch = "false"
   availability_zone       = var.AWS_ZONE_A
   tags = {
-    Name        = "{var.ENVIRONMENT}-subnet-db-A"
+    Name        = "${var.ENVIRONMENT}-subnet-db-A"
     Environment = var.ENVIRONMENT
   }
 }
@@ -88,7 +88,7 @@ resource "aws_subnet" "rt_subnet_db_B" {
   map_public_ip_on_launch = "false"
   availability_zone       = var.AWS_ZONE_B
   tags = {
-    Name        = "{var.ENVIRONMENT}-subnet-db-B"
+    Name        = "${var.ENVIRONMENT}-subnet-db-B"
     Environment = var.ENVIRONMENT
   }
 }
@@ -101,7 +101,7 @@ resource "aws_subnet" "rt_subnet_bastion_A" {
   map_public_ip_on_launch = "true"
   availability_zone       = var.AWS_ZONE_A
   tags = {
-    Name        = "{var.ENVIRONMENT}-subnet-bastion-A"
+    Name        = "${var.ENVIRONMENT}-subnet-bastion-A"
     Environment = var.ENVIRONMENT
   }
 }
@@ -112,7 +112,7 @@ resource "aws_internet_gateway" "rt_igw" {
   vpc_id = aws_vpc.rt_vpc.id
 
   tags = {
-    Name        = "{var.ENVIRONMENT}-igw"
+    Name        = "${var.ENVIRONMENT}-igw"
     Environment = var.ENVIRONMENT
   }
 }
@@ -128,7 +128,7 @@ resource "aws_default_route_table" "route_table" {
   }
 
   tags = {
-    Name        = "{var.ENVIRONMENT}-route-table"
+    Name        = "${var.ENVIRONMENT}-route-table"
     Environment = var.ENVIRONMENT
   }
 }
@@ -136,7 +136,7 @@ resource "aws_default_route_table" "route_table" {
 resource "aws_route_table_association" "k8s_A" {
   subnet_id      = aws_subnet.rt_subnet_k8s_A.id
   route_table_id = aws_default_route_table.route_table.id
-  
+
 }
 
 
@@ -160,9 +160,9 @@ resource "aws_route_table_association" "DB_B" {
 resource "aws_eip" "rt_nat_eip" {
 
   vpc = true
-  
-   tags = {
-    Name        = "{var.ENVIRONMENT}-nat-eip"
+
+  tags = {
+    Name        = "${var.ENVIRONMENT}-nat-eip"
     Environment = var.ENVIRONMENT
   }
 
@@ -180,7 +180,7 @@ resource "aws_nat_gateway" "rt_nat_gw" {
   subnet_id = aws_subnet.rt_subnet_k8s_A.id
 
   tags = {
-    Name = "{var.ENVIRONMENT}-nat-gw"
+    Name        = "${var.ENVIRONMENT}-nat-gw"
     Environment = var.ENVIRONMENT
   }
 
@@ -200,8 +200,8 @@ resource "aws_route_table" "rt_nat_gw_rt" {
     nat_gateway_id = aws_nat_gateway.rt_nat_gw.id
   }
 
-   tags = {
-    Name        = "{var.ENVIRONMENT}-nat-gw-rt"
+  tags = {
+    Name        = "${var.ENVIRONMENT}-nat-gw-rt"
     Environment = var.ENVIRONMENT
   }
 
