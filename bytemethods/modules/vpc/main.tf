@@ -7,7 +7,7 @@ resource "aws_vpc" "rt_vpc" {
   enable_classiclink   = "false"
   instance_tenancy     = "default"
   tags = {
-    Name        = "theory-k8s-research"
+    Name        = "theory-k8s-{var.ENVIRONMENT}"
     Environment = var.ENVIRONMENT
   }
 }
@@ -112,7 +112,7 @@ resource "aws_internet_gateway" "rt_igw" {
   vpc_id = aws_vpc.rt_vpc.id
 
   tags = {
-    Name        = "internet-gateway"
+    Name        = "{var.ENVIRONMENT}-igw"
     Environment = var.ENVIRONMENT
   }
 }
@@ -128,7 +128,7 @@ resource "aws_default_route_table" "route_table" {
   }
 
   tags = {
-    Name        = "route-table"
+    Name        = "{var.ENVIRONMENT}-route-table"
     Environment = var.ENVIRONMENT
   }
 }
@@ -136,6 +136,7 @@ resource "aws_default_route_table" "route_table" {
 resource "aws_route_table_association" "k8s_A" {
   subnet_id      = aws_subnet.rt_subnet_k8s_A.id
   route_table_id = aws_default_route_table.route_table.id
+  
 }
 
 
@@ -159,6 +160,11 @@ resource "aws_route_table_association" "DB_B" {
 resource "aws_eip" "rt_nat_eip" {
 
   vpc = true
+  
+   tags = {
+    Name        = "{var.ENVIRONMENT}-nat-eip"
+    Environment = var.ENVIRONMENT
+  }
 
   depends_on = [
     aws_route_table_association.k8s_A
@@ -175,6 +181,7 @@ resource "aws_nat_gateway" "rt_nat_gw" {
 
   tags = {
     Name = "{var.ENVIRONMENT}-nat-gw"
+    Environment = var.ENVIRONMENT
   }
 
   depends_on = [
@@ -193,9 +200,11 @@ resource "aws_route_table" "rt_nat_gw_rt" {
     nat_gateway_id = aws_nat_gateway.rt_nat_gw.id
   }
 
-  tags = {
-    Name = "Route Table for NAT Gateway"
+   tags = {
+    Name        = "{var.ENVIRONMENT}-nat-gw-rt"
+    Environment = var.ENVIRONMENT
   }
+
 
   depends_on = [
     aws_nat_gateway.rt_nat_gw
