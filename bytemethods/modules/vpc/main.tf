@@ -1,7 +1,7 @@
 # VPC 
 
 resource "aws_vpc" "rt_vpc" {
-  cidr_block           = "10.0.0.0/16"
+  cidr_block           = var.CIDR_BLOCK["vpc"]
   enable_dns_support   = "true"
   enable_dns_hostnames = "true"
   enable_classiclink   = "false"
@@ -16,7 +16,7 @@ resource "aws_vpc" "rt_vpc" {
 
 resource "aws_subnet" "rt_subnet_public_A" {
   vpc_id                  = aws_vpc.rt_vpc.id
-  cidr_block              = "10.0.0.0/22"
+  cidr_block              = var.CIDR_BLOCK[ "subnet-public-A"]
   map_public_ip_on_launch = "true"
   availability_zone       = var.AWS_ZONE_A
   tags = {
@@ -29,7 +29,7 @@ resource "aws_subnet" "rt_subnet_public_A" {
 
 resource "aws_subnet" "rt_subnet_public_B" {
   vpc_id                  = aws_vpc.rt_vpc.id
-  cidr_block              = "10.0.4.0/22"
+  cidr_block              = var.CIDR_BLOCK["subnet-public-B"]
   map_public_ip_on_launch = "true"
   availability_zone       = var.AWS_ZONE_B
   tags = {
@@ -43,7 +43,7 @@ resource "aws_subnet" "rt_subnet_public_B" {
 
 resource "aws_subnet" "rt_subnet_k8s_A" {
   vpc_id                  = aws_vpc.rt_vpc.id
-  cidr_block              = "10.0.20.0/22"
+  cidr_block              = var.CIDR_BLOCK["subnet-k8-A"]
   map_public_ip_on_launch = "false"
   availability_zone       = var.AWS_ZONE_A
   tags = {
@@ -56,7 +56,7 @@ resource "aws_subnet" "rt_subnet_k8s_A" {
 ## K8 Subnet B
 resource "aws_subnet" "rt_subnet_k8s_B" {
   vpc_id                  = aws_vpc.rt_vpc.id
-  cidr_block              = "10.0.24.0/22"
+  cidr_block              = var.CIDR_BLOCK["subnet-k8-B"]
   map_public_ip_on_launch = "false"
   availability_zone       = var.AWS_ZONE_B
   tags = {
@@ -84,7 +84,7 @@ resource "aws_subnet" "rt_subnet_db_A" {
 
 resource "aws_subnet" "rt_subnet_db_B" {
   vpc_id                  = aws_vpc.rt_vpc.id
-  cidr_block              = "10.0.64.0/20"
+  cidr_block              = var.CIDR_BLOCK["subnet-db-B"]
   map_public_ip_on_launch = "false"
   availability_zone       = var.AWS_ZONE_B
   tags = {
@@ -97,7 +97,7 @@ resource "aws_subnet" "rt_subnet_db_B" {
 ## Bastion Subnet A
 resource "aws_subnet" "rt_subnet_bastion_A" {
   vpc_id                  = aws_vpc.rt_vpc.id
-  cidr_block              = "10.0.12.0/24"
+  cidr_block              = var.CIDR_BLOCK["subnet-public-bastion-A"]
   map_public_ip_on_launch = "true"
   availability_zone       = var.AWS_ZONE_A
   tags = {
