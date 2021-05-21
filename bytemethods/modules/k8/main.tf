@@ -1,7 +1,3 @@
-
-PS C:\Users\adiwong> eksctl create cluster --name=theoryBeta --region=us-east-1  --without-nodegroup --vpc-private-subnets="$($env:k8SubnetA.Trim()),$($env:k8SubnetB.Trim())" --vpc-public-subnets="$($env:pubSubnetA.Trim()),$($env:pubSubnetB.Trim())"
-
-
 resource "aws_eks_cluster" "example" {
   name     = "example"
   role_arn = aws_iam_role.example.arn
