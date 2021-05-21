@@ -1,4 +1,0 @@
-formatter: markdown
-header-from: main.tf
-sort:
-  enabled: true
