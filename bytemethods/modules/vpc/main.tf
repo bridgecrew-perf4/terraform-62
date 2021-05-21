@@ -72,7 +72,7 @@ resource "aws_eip" "rt_nat_eip" {
   }
 
   depends_on = [
-    aws_route_table_association.k8s_A
+    aws_route_table_association.rt_route_associations
   ]
 }
 
