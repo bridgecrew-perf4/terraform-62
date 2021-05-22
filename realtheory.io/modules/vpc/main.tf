@@ -1,4 +1,17 @@
 # VPC
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.27"
+    }
+  }
+}
+provider "aws" {
+  profile = "default"
+  region  = "us-west-2"
+}
+
 
 resource "aws_vpc" "rt_vpc" {
   cidr_block           = var.rt_vpc.cidr_block
@@ -52,6 +65,7 @@ resource "aws_default_route_table" "route_table" {
   }
 }
 
+//condition ? true_val : false_val
 resource "aws_route_table_association" "rt_route_associations" {
 
   for_each = toset(var.rt_route_associations)
@@ -82,7 +96,7 @@ resource "aws_nat_gateway" "rt_nat_gw" {
 
   allocation_id = aws_eip.rt_nat_eip.id
 
-  subnet_id = aws_subnet.rt_subnets["subnet-k8-A"].id
+  subnet_id = aws_subnet.rt_subnets[var.rt_nat_subnet].id
 
   tags = {
     Name        = "${var.environment}-nat-gw"

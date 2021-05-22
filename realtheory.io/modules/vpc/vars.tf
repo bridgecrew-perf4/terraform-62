@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "us-west-2"
-}
-
 variable "environment" {
   type        = string
   description = "The environment such as dev, staging, research ,prod, etc."
@@ -76,5 +72,13 @@ variable "rt_route_associations" {
   description = "The default route table associations"
 
   default = ["subnet-k8-A", "subnet-k8-B", "subnet-db-A", "subnet-db-B"]
+
+}
+
+variable "rt_nat_subnet" {
+
+  type = string
+
+  default = "subnet-k8-A"
 
 }
