@@ -1,4 +1,4 @@
-# VPC 
+# VPC
 
 resource "aws_vpc" "rt_vpc" {
   cidr_block           = var.rt_vpc.cidr_block
@@ -27,7 +27,6 @@ resource "aws_subnet" "rt_subnets" {
 }
 
 ## IGW
-
 resource "aws_internet_gateway" "rt_igw" {
   vpc_id = aws_vpc.rt_vpc.id
 
@@ -53,26 +52,12 @@ resource "aws_default_route_table" "route_table" {
   }
 }
 
-resource "aws_route_table_association" "k8s_A" {
-  subnet_id      = aws_subnet.rt_subnets["subnet-k8-A"].id
+resource "aws_route_table_association" "rt_route_associations" {
+
+  for_each = toset(var.rt_route_associations)
+
   route_table_id = aws_default_route_table.route_table.id
-
-}
-
-
-resource "aws_route_table_association" "k8s_B" {
-  subnet_id      = aws_subnet.rt_subnets["subnet-k8-B"].id
-  route_table_id = aws_default_route_table.route_table.id
-}
-
-resource "aws_route_table_association" "DB_A" {
-  subnet_id      = aws_subnet.rt_subnets["subnet-db-A"].id
-  route_table_id = aws_default_route_table.route_table.id
-}
-
-resource "aws_route_table_association" "DB_B" {
-  subnet_id      = aws_subnet.rt_subnets["subnet-db-B"].id
-  route_table_id = aws_default_route_table.route_table.id
+  subnet_id = aws_subnet.rt_subnets[each.value].id
 }
 
 
@@ -87,7 +72,7 @@ resource "aws_eip" "rt_nat_eip" {
   }
 
   depends_on = [
-    aws_route_table_association.k8s_A
+    aws_route_table_association.rt_route_associations
   ]
 }
 
@@ -112,7 +97,6 @@ resource "aws_nat_gateway" "rt_nat_gw" {
 
 resource "aws_route_table" "rt_nat_gw_rt" {
 
-
   vpc_id = aws_vpc.rt_vpc.id
 
   route {
@@ -131,36 +115,3 @@ resource "aws_route_table" "rt_nat_gw_rt" {
   ]
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

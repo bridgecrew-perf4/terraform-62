@@ -54,7 +54,7 @@ resource "aws_default_route_table" "route_table" {
 
 resource "aws_route_table_association" "rt_route_associations" {
 
-for_each = (var.rt_route_associations)
+for_each = tomap(var.rt_route_associations)
 
   route_table_id = aws_default_route_table.route_table.id
   subnet_id = aws_subnet.rt_subnets[each.value].id
