@@ -1,7 +1,7 @@
-variable "region" {
-  type    = string
-  default = "us-west-2"
+provider "aws" {
+  region = "us-west-2"
 }
+
 variable "environment" {
   type        = string
   description = "The environment such as dev, staging, research ,prod, etc."
