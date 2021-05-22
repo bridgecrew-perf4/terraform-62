@@ -14,12 +14,12 @@ resource "aws_vpc" "rt_vpc" {
 
 resource "aws_subnet" "rt_subnets" {
 
-  for_each = (var.rt_subnets)
+  for_each = var.rt_subnets
 
   vpc_id                  = aws_vpc.rt_vpc.id
-  cidr_block              = each.value[0]
-  map_public_ip_on_launch = each.value[1]
-  availability_zone       = each.value[2]
+  cidr_block              = each.value.cidr_block
+  map_public_ip_on_launch = each.value.public
+  availability_zone       = each.value.zone
   tags = {
     Name        = "${each.key}-${var.environment}"
     Environment = var.environment

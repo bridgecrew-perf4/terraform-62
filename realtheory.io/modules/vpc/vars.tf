@@ -1,5 +1,5 @@
 variable "region" {
- type = string
+  type    = string
   default = "us-west-2"
 }
 variable "environment" {
@@ -24,41 +24,49 @@ variable "rt_vpc" {
 }
 
 variable "rt_subnets" {
-  //[cidr_block,is_public,zone]
-  type = map(tuple([string, bool, string]))
-
-  description = "Subnets [cidr_block,is_public,zone]"
-
-  default = {
-    "subnet-A"         = ["10.0.0.0/22", true, "us-west-2a"]
-    "subnet-B"         = ["10.0.4.0/22", true, "us-west-2b"]
-    "subnet-k8-A"      = ["10.0.20.0/22", false, "us-west-2a"]
-    "subnet-k8-B"      = ["10.0.24.0/22", false, "us-west-2b"]
-    "subnet-db-A"      = ["10.0.48.0/20", false, "us-west-2a"]
-    "subnet-db-B"      = ["10.0.64.0/20", false, "us-west-2b"]
-    "subnet-bastion-A" = ["10.0.12.0/24", true, "us-west-2a"]
-  }
-}
-variable "subnets" {
   type = map(object({
     cidr_block = string
-    zone = string
-    public = bool
+    zone       = string
+    public     = bool
   }))
 
   default = {
     "subnet-A" = {
       cidr_block = "10.0.0.0/22"
-      zone = "us-west-2a"
-      public = true
+      zone       = "us-west-2a"
+      public     = true
     }
     "subnet-B" = {
       cidr_block = "10.0.4.0/22"
-      zone = "us-west-2b"
-      public = true
+      zone       = "us-west-2b"
+      public     = true
+    }
+    "subnet-k8-A" = {
+      cidr_block = "10.0.20.0/22"
+      zone       = "us-west-2a"
+      public     = false
+    }
+    "subnet-k8-B" = {
+      cidr_block = "10.0.24.0/22"
+      zone       = "us-west-2b"
+      public     = false
+    }
+    "subnet-db-A" = {
+      cidr_block = "10.0.48.0/20"
+      zone       = "us-west-2a"
+      public     = false
+    }
+    "subnet-db-B" = {
+      cidr_block = "10.0.64.0/20"
+      zone       = "us-west-2b"
+      public     = false
+    }
+    "subnet-bastion-A" = {
+      cidr_block = "10.0.12.0/24"
+      zone       = "us-west-2a"
+      public     = true
     }
   }
-
 }
 
 variable "rt_route_associations" {
