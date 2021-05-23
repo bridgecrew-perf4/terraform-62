@@ -6,12 +6,15 @@ terraform {
       version = "~> 3.27"
     }
   }
+
+  backend "s3" {
+
+  }
 }
 provider "aws" {
   profile = "default"
   region  = "us-west-2"
 }
-
 
 resource "aws_vpc" "rt_vpc" {
   cidr_block           = var.rt_vpc.cidr_block
