@@ -14,7 +14,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "realtheory.io-terraform-state"
+  bucket = "realtheory-v1-terraform-state"
 
   versioning {
     enabled = true
@@ -26,6 +26,11 @@ resource "aws_s3_bucket" "terraform_state" {
         sse_algorithm = "AES256"
       }
     }
+  }
+
+  tags = {
+    Name        = "realtheory-v1-terraform-state-${var.environment}"
+    Environment = var.environment
   }
 
   lifecycle {
