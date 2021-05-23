@@ -3,7 +3,7 @@ provider "aws" {
   region  = "us-east-1"
 }
 module "vpc" {
-  source      = "../modules/vpc"
+  source      = "../../modules/vpc"
   environment = "dev"
   rt_subnets = {
     "subnet-A" = {
