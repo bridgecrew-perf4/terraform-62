@@ -2,6 +2,10 @@ terraform {
   backend "s3" {
     bucket = "realtheory-v1-terraform-state"
     key = "research/terraform.tfstate"
+    region = "us-west-2"
+
+    dynamodb_table = "rt-terraform-locks"
+    encrypt = true
   }
 }
 
