@@ -16,15 +16,14 @@ provider "aws" {
 resource "aws_dynamodb_table" "terraform_locks" {
   name         = "rt-terraform-locks"
   billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "LockId"
+  hash_key     = "LockID"
 
   attribute {
-    name = "LockId"
+    name = "LockID"
     type = "S"
   }
 
   tags = {
-    Name        = "rt-terraform-locks-${var.environment}"
     Environment = var.environment
   }
 }
